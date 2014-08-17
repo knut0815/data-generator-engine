@@ -5,6 +5,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Pycharm specific files
+.idea/
+
 # Distribution / packaging
 .Python
 env/
@@ -33,6 +36,9 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+
+# Virtual Environment
+dge-venv/
 
 # Translations
 *.mo
