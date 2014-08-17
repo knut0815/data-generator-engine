@@ -1,11 +1,19 @@
 Data Generator Engine
 =====================
 
-Data Generator Engine (DGE) generates new data that is based on existing data. Therefore, DGE models the distribution
+Data Generator Engine (DGE) generates data that resembles the existing data. Therefore, DGE models the distribution
 of the input data. The underlying distribution is used to sample new data based on the given and existing data.
 
 The current implementation of DGE is written as Python library, which allows the integration of DGE in Python projects.
 DGE uses NumPy and SciPy to do the required calculations and scikit-learn to implement the machine learning.
+
+## Using DGE
+The data generators implement a common interface with the following methods
+* fit(x): estimate the data distribution using the data set 'x'
+* sample(): sample a random variate from the distribution
+* stream(n): stream n or infinite (n==None) random variates as Python generator
+
+DGE is implemented as Python library that can be imported for use.
 
 ## Univariate distributions
 Univariate distributions are defined for one-dimensional random variables. The random variables are continuous, which
@@ -14,7 +22,7 @@ Example of sampling random variates from an univariate probability distribution:
 
 ```python
 import dge
-ud = UnivariateData()
+ud = dge.UnivariateData()
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,17 +35,15 @@ d = np.random.beta(2,5,1000)
 ud.fit(d)
 dhat = ud.sample(1000)
 plt.hist(d) and plt.hist(dhat) and plt.show()
+
+# Read 10 random variates from a generator
+for random_variate in ud.stream(10):
+    print(random_variate)
 ```
 
 DGE models the univariate distributions by estimating the cumulative distribution function (CDF) of the data using
 regression methods. The random variates are sampled using an uniform distribution and the estimated CDF. See the paper
 [Neural Networks for Density Estimation](http://papers.nips.cc/paper/1624-neural-networks-for-density-estimation.pdf) for further information.
-
-### Read 10 random variates from a stream
-```python
-for random_variate in ud.stream(10):
-    print(random_variate)
-```
 
 ## Multivariate distributions
 ### Multivariate Correlated Data (MCD)
