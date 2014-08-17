@@ -29,6 +29,12 @@ dhat = ud.sample(1000)
 plt.hist(d) and plt.hist(dhat) and plt.show()
 ```
 
+# Read 10 random variates from a stream
+```python
+for random_variate in ud.stream(10):
+    print(random_variate)
+```
+
 ## Multivariate distributions
 TODO
 
@@ -56,8 +62,3 @@ The mean is called the mean of the sampling distribution of the mean. Central Li
 of series approaches infinity, the mean of the sampling distribution of the mean approaches the population mean. The
 following figure illustrates the results:
 ![alt](https://github.com/nikoreun/data-generator-engine/raw/master/markdown/dge_discrete_example.png)
-
-# Read 10 random variates from a stream
-for random_variate in ud.stream(10):
-    print(random_variate)
-```
