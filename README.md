@@ -12,9 +12,15 @@ Example of sampling random variates from an univariate probability distribution:
 ```python
 import dge
 import numpy as np
+import matplotlib.pyplot as plt
 d = np.random.normal(20.0, 1.0, 1000)
 ud = UniformData()
-ud.fit(d1)
+ud.fit(d)
 dhat = ud.sample(1000)
 print("Mean = {}, STD = {}".format(dhat.mean(),dhat.std()))
+
+d = np.random.beta(2,5,1000)
+ud.fit(d)
+dhat = ud.sample(1000)
+plt.hist(d) and plt.hist(dhat) and plt.show()
 ```
