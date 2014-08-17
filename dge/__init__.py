@@ -57,6 +57,38 @@ class DiscreteData(DataGenerator):
         return None
 
 
+class MultivariateCorrelatedData(DataGenerator):
+    def __init__(self):
+        """
+        MultivariateCorrelatedData models the correlations between the random variables of a given data set.
+        :return: None
+        """
+        super(DataGenerator, self).__init__()
+        self.L = None
+        self.correlation_matrix = None
+        self.max_ = None
+        self.min_ = None
+
+    def fit(self, x):
+        """
+        Fit the data generator to produce random variates that follow the distribution of the input data 'x'.
+        :param x: Data set as a n*d matrix (n observations, d dimensions)
+        :return: None
+        """
+        x = np.array(x)
+        self.correlation_matrix = np.corrcoef(x, rowvar=False)
+        self.L = np.linalg.cholesky(self.correlation_matrix)
+        self.max_ = np.max(x, axis=0)
+        self.min_ = np.min(x, axis=0)
+
+    def sample(self):
+        """
+        Sample a random variate that follows the correlation structure of the observed data.
+        :return: A random variate as a NumPy array
+        """
+        return np.dot(np.random.uniform(self.min_, self.max_), self.L)
+
+
 class UnivariateData(DataGenerator):
     def __init__(self, regression=RFR):
         """

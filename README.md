@@ -40,7 +40,31 @@ for random_variate in ud.stream(10):
 ```
 
 ## Multivariate distributions
-TODO
+### Multivariate Correlated Data (MCD)
+MCD models the correlation structure of the observed data. MCD uses Cholesky decomposition of the correlation
+matrix to generate random variates that have the observed correlation structure. The following example samples
+random variates with independent variables from Gaussian distribution. MCD models the hypothetical correlation
+structure relatively well.
+
+```python
+import dge
+import numpy as np
+mcd = dge.MultivariateCorrelatedData()
+d = np.random.normal(0, 4, (100, 3))
+print(np.corrcoef(d, rowvar=False))
+
+    array([[ 1.        , -0.05467565,  0.05282523],
+           [-0.05467565,  1.        ,  0.02704508],
+           [ 0.05282523,  0.02704508,  1.        ]])
+
+mcd.fit(d)
+print(np.corrcoef(np.array(list(mcd.stream(100))), rowvar=False))
+
+    array([[ 1.        , -0.09294713,  0.01578568],
+       [-0.09294713,  1.        ,  0.10180806],
+       [ 0.01578568,  0.10180806,  1.        ]])
+
+```
 
 ## Discrete distributions
 The current implementation is a simple frequentist approach where the probability of an observed event is:
@@ -48,7 +72,7 @@ The current implementation is a simple frequentist approach where the probabilit
 * Measured as the fraction of the number of observations and the number of all observations
 ```python
 import dge
-dd = DiscreteData()
+dd = dge.DiscreteData()
 dd.fit([0,0,1])
 dd.sample()
 ```
