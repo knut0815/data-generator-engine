@@ -25,6 +25,38 @@ class DataGenerator(object):
             yield(self.sample())
 
 
+class DiscreteData(DataGenerator):
+    def __init__(self):
+        super(DataGenerator, self).__init__()
+        self.events = None
+        self.p = None
+        self.p_cumsum = None
+
+    def fit(self, x):
+        """
+        Fit the data generator to produce random observations that follow the distribution
+        of the input data 'x'. The modeled distribution is based on the given observations.
+        :param x: NumPy array of list of observed events
+        :return: None
+        """
+        x = np.array(x)
+        self.events = np.unique(x)
+        self.p = np.bincount(x) / float(x.size)
+        self.p_cumsum = np.cumsum(self.p)
+
+    def sample(self):
+        """
+        The method returns a random variate that follows the fitted distribution.
+        :return:An observed event
+        :rtype:int
+        """
+        t_ = np.random.uniform(0, 1)
+        for e, p in zip(self.events, self.p_cumsum):
+            if t_ <= p:
+                return e
+        return None
+
+
 class UnivariateData(DataGenerator):
     def __init__(self, regression=RFR):
         """
