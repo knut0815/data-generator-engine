@@ -29,7 +29,7 @@ dhat = ud.sample(1000)
 plt.hist(d) and plt.hist(dhat) and plt.show()
 ```
 
-# Read 10 random variates from a stream
+### Read 10 random variates from a stream
 ```python
 for random_variate in ud.stream(10):
     print(random_variate)
