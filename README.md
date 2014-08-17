@@ -1,4 +1,4 @@
-data-generator-engine
+Data Generator Engine
 =====================
 
 Data Generator Engine (DGE) generates new data that is based on existing data. Therefore, DGE models the distribution
@@ -29,6 +29,10 @@ dhat = ud.sample(1000)
 plt.hist(d) and plt.hist(dhat) and plt.show()
 ```
 
+DGE models the univariate distributions by estimating the cumulative distribution function (CDF) of the data using
+regression methods. The random variates are sampled using an uniform distribution and the estimated CDF. See the paper
+[Neural Networks for Density Estimation](http://papers.nips.cc/paper/1624-neural-networks-for-density-estimation.pdf) for further information.
+
 ### Read 10 random variates from a stream
 ```python
 for random_variate in ud.stream(10):
@@ -50,8 +54,8 @@ dd.sample()
 ```
 
 Consider a situation where you observe a series of two events: 0, 0 and 1. Therefore, from the frequentist point of
-view, there is 66% probability of observing the event 0 and 33% of the event 1. Now we will sample random variates
-as series of length 2 to 300:
+view, there is 66% probability of observing the event 0 and 33% probability of observing the event 1. Now we will
+sample random variates as series of length from 2 to 300:
 ```python
 for i in range(2,301):
     dd.stream(i)
