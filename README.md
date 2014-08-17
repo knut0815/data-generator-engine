@@ -14,7 +14,7 @@ import dge
 import numpy as np
 import matplotlib.pyplot as plt
 d = np.random.normal(20.0, 1.0, 1000)
-ud = UniformData()
+ud = UnivariateData()
 ud.fit(d)
 dhat = ud.sample(1000)
 print("Mean = {}, STD = {}".format(dhat.mean(),dhat.std()))
@@ -23,4 +23,8 @@ d = np.random.beta(2,5,1000)
 ud.fit(d)
 dhat = ud.sample(1000)
 plt.hist(d) and plt.hist(dhat) and plt.show()
+
+# Read 10 random variates from a stream
+for random_variate in ud.stream(10):
+    print(random_variate)
 ```

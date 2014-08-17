@@ -13,11 +13,22 @@ class DataGenerator(object):
     def sample(self):
         return 0.0
 
+    def stream(self, max_=None):
+        """
+        Stream the random variates as Python generator.
+        :param max_: Maximum number of stream elements (default None is infinite)
+        :return: A generator of random variates
+        """
+        while max_ is None or max_ > 0:
+            if max_ is not None:
+                max_ -= 1
+            yield(self.sample())
 
-class UniformData(DataGenerator):
+
+class UnivariateData(DataGenerator):
     def __init__(self, regression=RFR):
         """
-        UniformData models the cumulative probability distribution (CDF) of an arbitrary uniform distribution. The
+        UnivariateData models the cumulative probability distribution (CDF) of an arbitrary univariate distribution. The
         modeled distribution is used to sample random variates. CDF is modeled using regression.
         :param regression: scikit-learn regressor that implements methods "fit" and "predict"
         :return: None
